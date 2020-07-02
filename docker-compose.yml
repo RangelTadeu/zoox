@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    container_name: "zoox-api"
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    environment:
+      - APP_SECRET=${APP_SECRET}
+      - DB_HOST=mongo-zoox
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=redis-zoox
+      - REDIS_PORT=${REDIS_PORT}
+      - NODE_ENV=${NODE_ENV}
+    networks:
+      - zoox-network
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo
+    container_name: mongo-zoox
+    restart: on-failure
+    networks:
+      - zoox-network
+    volumes:
+      - mongo-zoox-data:/data
+
+  redis:
+    image: redis
+    container_name: redis-zoox
+    restart: on-failure
+    networks:
+      - zoox-network
+    volumes:
+      - redis-zoox-data:/data
+
+volumes:
+  mongo-zoox-data:
+  redis-zoox-data:
+
+networks:
+  zoox-network:
