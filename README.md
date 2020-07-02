@@ -330,6 +330,5 @@ http://localhost:3000/cities/:id/
     $ cd zoox
 
     # Tenha certeza de que as portas 27018 e 6380 estão disponíveis.
-    # Inicie os testes.
     $ sudo yarn test
 ```
